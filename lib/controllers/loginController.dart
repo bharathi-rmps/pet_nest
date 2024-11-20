@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:pet_nest/screens/authScreen.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

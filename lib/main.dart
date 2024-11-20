@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_nest/screens/authScreen.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
+import 'package:pet_nest/screens/auth/signupUser.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: authScreen(),
+        home: signupUser(),
        );
   }
 }
