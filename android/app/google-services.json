@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "91974778275",
+    "project_id": "catnest-5f75c",
+    "storage_bucket": "catnest-5f75c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91974778275:android:39b54ca2572ab11545ae16",
+        "android_client_info": {
+          "package_name": "com.example.pet_nest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXkb5E9JOip8qd1PJowpEbGbDer2O4C14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
