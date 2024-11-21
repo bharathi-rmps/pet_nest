@@ -1,178 +1,190 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pet_nest/components/signupButton.dart';
-import 'package:pet_nest/components/squareTileImage.dart';
 import 'package:pet_nest/components/textField.dart';
+import 'package:pet_nest/controllers/regController.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-class signupUser extends StatelessWidget{
+class signupUser extends StatelessWidget {
   signupUser({super.key});
 
-  //text controllers
-
-  final userNameController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
-
-  //signin method
-  void userSignup(String username, String firstName, String lastName, String email, String password, String phone){
-    print("signin button pressed $username, $firstName, $lastName, $email, $password, $phone");
-  }
-
-
-  //signup method
-  void signup(){
-    print("signup button pressed");
-  }
+  final regController _regController = Get.put(regController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.lock, size: 100),
+              const SizedBox(height: 40),
+              Text(
+                "Hi, please login or signup to continue!",
+                style: TextStyle(color: Colors.grey[700], fontSize: 16),
+              ),
+              const SizedBox(height: 30),
+              textField(
+                labelText: "User Name",
+                controller: _regController.userNameController,
+                hintText: 'Please enter your  username',
+                obscureText: false,
+              ),
+              const SizedBox(height: 30),
+              textField(
+                labelText: "First Name",
+                controller: _regController.firstNameController,
+                hintText: 'Please enter your first name',
+                obscureText: false,
+              ),
+              const SizedBox(height: 30),
+              textField(
+                labelText: "Last Name",
+                controller: _regController.lastNameController,
+                hintText: 'Please enter your last name',
+                obscureText: false,
+              ),
+              const SizedBox(height: 30),
+              textField(
+                labelText: "E-Mail ID",
+                controller: _regController.emailController,
+                hintText: 'Please enter your email id',
+                obscureText: false,
+              ),
+              const SizedBox(height: 30),
+              textField(
+                labelText: "Password",
+                controller: _regController.passwordController,
+                hintText: 'Please enter your password',
+                obscureText: true,
+              ),
+              const SizedBox(height: 30),
+              signupButton(
+                onTap: () {
+                  String? errorMessage = _regController.validateInput(
+                    _regController.firstNameController.text,
+                    _regController.lastNameController.text,
+                    _regController.emailController.text,
+                    _regController.userNameController.text,
+                    _regController.passwordController.text,
+                  );
 
-                //top icon
-                const Icon(
-                  Icons.lock,
-                  size: 100,
-                ),
-
-                //login to continue text
-                const SizedBox(height: 50),
-                Text(
-                  "Hi, please login or signup to continue!",
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
+                  if (errorMessage != null) {
+                    Get.snackbar(
+                      "Validation Error",
+                      errorMessage,
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.redAccent,
+                      colorText: Colors.white,
+                    );
+                  } else {
+                    _regController.sendOtp();
+                    showOtpDialog(context);
+                  }
+                },
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already Have an Account? ",
+                    style: TextStyle(color: Colors.grey[700]),
                   ),
-                ),
-
-                //username textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: userNameController,
-                  hintText: 'Username',
-                  obscureText: false,
-                ),
-
-                //firstname textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: firstNameController,
-                  hintText: 'First Name',
-                  obscureText: false,
-                ),
-
-                //lastname textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: lastNameController,
-                  hintText: 'Last Name',
-                  obscureText: false,
-                ),
-
-                //email textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: emailController,
-                  hintText: 'E-Mail ID',
-                  obscureText: false,
-                ),
-
-                //password textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
-
-                //phone number textfield
-                const SizedBox(height: 30),
-                textField(
-                  controller: phoneController,
-                  hintText: 'Contact Number',
-                  obscureText: false,
-                ),
-
-                //login button
-                const SizedBox(height: 15),
-                signupButton(
-                  onTap: ()=> userSignup(
-                      this.userNameController.text,
-                      this.firstNameController.text,
-                      this.lastNameController.text,
-                      this.emailController.text,
-                      this.passwordController.text,
-                      this.phoneController.text
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => loginUser()),
+                      );
+                    },
+                    child: const Text(
+                      "Login Now!",
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                //other signin options
-                const SizedBox(height: 40),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.5,
-                        color: Colors.grey[400],
-                      ),
+  void showOtpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return GetBuilder<regController>(
+          builder: (controller) {
+            return AlertDialog(
+              title: const Text("Verify Phone Number"),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 30),
+                  // Phone number input with country code
+                  InternationalPhoneNumberInput(
+                    onInputChanged: (PhoneNumber number) {
+                      controller.phoneController.text = number.phoneNumber!;
+                    },
+                    selectorConfig: const SelectorConfig(
+                      selectorType: PhoneInputSelectorType.DIALOG,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Or Continue with',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                        ),
-                      ),
+                    ignoreBlank: false,
+                    keyboardType: TextInputType.number,
+                    inputDecoration: const InputDecoration(
+                      labelText: 'Phone Number',
+                      hintText: 'Enter your phone number with country code',
                     ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 1.5,
-                        color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 20),
+                  // Send OTP button
+                  if (!controller.isOtpSent.value)
+                    ElevatedButton(
+                      onPressed: () {
+                        // Send OTP and update the state
+                        controller.sendOtp();
+                        Navigator.of(context)
+                            .pop(); // Close dialog to reopen with OTP field
+                        showOtpDialog(
+                            context); // Reopen the dialog to show OTP input
+                      },
+                      child: const Text("Send OTP"),
+                    ),
+                  // Show OTP field only if OTP is sent
+                  if (controller.isOtpSent.value) ...[
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: controller.otpController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: "Enter OTP",
+                        hintText: "Please use 1234 for Demo",
                       ),
                     ),
                   ],
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Validate OTP
+                    controller.validateOtp(context);
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: const Text("Submit"),
                 ),
-
-                //images
-                // const SizedBox(height: 30),
-                // const Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     squareTileImage(imgPath: 'lib/assets/google.png'),
-                //     squareTileImage(imgPath: 'lib/assets/apple.png'),
-                //   ],
-                // ),
-
-                //new user, register here
-                const SizedBox(height: 30),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already Have an Account? ",
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                      const Text(
-                        "Login Now!",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                        ),
-                      ),
-                    ]
-                ),
-              ],),
-          ),
-        )
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

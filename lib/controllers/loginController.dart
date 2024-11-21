@@ -1,33 +1,75 @@
-import 'dart:convert';
-import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_nest/utils/apiEndpoint.dart';
 
-class loginController{
-  TextEditingController userName = TextEditingController();
-  TextEditingController password = TextEditingController();
+class LoginController extends GetxController {
+  // TextEditingControllers
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
+  // Reactive properties
+  var isLoggedIn = false.obs;
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
+
+  // Login function
   Future<void> loginUser() async {
-    var headers = {'Content-Type' : 'application/json'};
-    try{
-      var url = Uri.parse(
-        apiEndpoint.baseUrl + apiEndpoint.authEndPoints.login
-      );
-      Map body = {
-        'username' : userName.text,
-        'password' : password.text
-      };
-      http.Response response = await http.post(url, body: jsonEncode(body), headers: headers);
+    isLoading.value = true;
+    errorMessage.value = ''; // Clear any previous error messages
 
-      if(response.statusCode == 200){
-        print("Login success");
-        userName.clear();
-        password.clear();
+    try {
+      var url = Uri.parse(
+          "${apiEndpoint.baseUrl}${apiEndpoint.authEndPoints.login}?username=${userNameController.text}&password=${passwordController.text}");
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+
+      http.Response response = await http.get(url, headers: headers);
+
+      if (response.statusCode == 200) {
+        isLoggedIn.value = true;
+        Get.snackbar(
+          "Success",
+          "Login successful!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+        // Clear input fields
+        userNameController.clear();
+        passwordController.clear();
+      } else {
+        isLoggedIn.value = false;
+        errorMessage.value = "Login failed: ${response.reasonPhrase}";
+        Get.snackbar(
+          "Error",
+          errorMessage.value,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
       }
-    } catch(e){
-      print("error, $e");
+    } catch (e) {
+      errorMessage.value = "An error occurred: $e";
+      Get.snackbar(
+        "Error",
+        errorMessage.value,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
+  }
+
+  // Clear all inputs
+  void clearFields() {
+    userNameController.clear();
+    passwordController.clear();
   }
 }
