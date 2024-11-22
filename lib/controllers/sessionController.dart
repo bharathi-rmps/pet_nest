@@ -1,22 +1,21 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 import 'package:http/http.dart' as http;
 
-
 class sessionController extends GetxController {
-
   // Reactive session state
   var isLoggedIn = false.obs;
-  var id = ''.obs;
+  var id = 0.obs;
   var username = ''.obs;
   var firstname = ''.obs;
   var lastname = ''.obs;
   var email = ''.obs;
   var password = ''.obs;
   var phone = ''.obs;
+  var userStatus = 0.obs;
 
   // Storage instance for persisting session
   final GetStorage _storage = GetStorage();
@@ -24,15 +23,16 @@ class sessionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // check persisted session status
+    // Check persisted session status
     isLoggedIn.value = _storage.read('isLoggedIn') ?? false;
-    id.value = _storage.read('id') ?? '';
+    id.value = _storage.read('id') ?? 0;
     username.value = _storage.read('username') ?? '';
     firstname.value = _storage.read('firstname') ?? '';
     lastname.value = _storage.read('lastname') ?? '';
     email.value = _storage.read('email') ?? '';
     password.value = _storage.read('password') ?? '';
     phone.value = _storage.read('phone') ?? '';
+    userStatus.value = _storage.read('userStatus') ?? 0;
   }
 
   // Set session
@@ -40,23 +40,22 @@ class sessionController extends GetxController {
     isLoggedIn.value = true;
     username.value = userName;
     _storage.write('isLoggedIn', true);
-    _storage.write('username', userName); // Persist username
     getUserDetails(userName);
-    print("Session created: $isLoggedIn, Username: $username");
   }
 
   // Clear session
   void logout() {
     isLoggedIn.value = false;
-    id.value = '';
+    id.value = 0;
     username.value = '';
     firstname.value = '';
     lastname.value = '';
     email.value = '';
     password.value = '';
     phone.value = '';
+    userStatus.value = 0;
     _storage.erase();
-    print("Session cleared: $isLoggedIn");
+    Get.off(() => loginUserScreen());
   }
 
   // Get user details from API
@@ -72,26 +71,21 @@ class sessionController extends GetxController {
       http.Response response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
-        // parsing the JSON response to data
         var data = jsonDecode(response.body);
+        print("data: $data");
 
-        // extracting and store details
-        id.value = data['id'].toString();
-        firstname.value = data['firstName'];
-        lastname.value = data['lastName'];
-        email.value = data['email'];
-        password.value = data['password']; // Avoid storing sensitive info like passwords
-        phone.value = data['phone'];
+        // Extract and store details
+        id.value = data['id'] ?? 0;
+        firstname.value = data['firstName'] ?? '';
+        lastname.value = data['lastName'] ?? '';
+        email.value = data['email'] ?? '';
+        password.value = data['password'] ?? '';
+        phone.value = data['phone']?.toString() ?? '';
+        userStatus.value = data['userStatus'] ?? 0;
 
-        // persist in storage
-        _storage.write("id", id.value);
-        _storage.write("firstname", firstname.value);
-        _storage.write("lastname", lastname.value);
-        _storage.write("email", email.value);
-        _storage.write("password", password.value);
-        _storage.write("phone", phone.value);
+        // Persist in storage with correct types
+        saveSessionToStorage();
 
-        print("User details fetched and stored: $data");
       } else {
         print("Failed to fetch user details: ${response.statusCode}");
       }
@@ -99,4 +93,18 @@ class sessionController extends GetxController {
       print("Error while fetching user details: $e");
     }
   }
+
+  //to save session, if updated
+  void saveSessionToStorage() {
+    _storage.write("id", id.value);
+    _storage.write("username", username.value);
+    _storage.write("firstname", firstname.value);
+    _storage.write("lastname", lastname.value);
+    _storage.write("email", email.value);
+    _storage.write("password", password.value);
+    _storage.write("phone", phone.value);
+    _storage.write("userStatus", userStatus.value);
+  }
+
 }
+

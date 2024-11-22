@@ -12,4 +12,6 @@ class AuthEndPoints{
 
 class UserEndpoints{
   final String getUserDetails = "/user/";
+  final String updateUserDetails = "/user/";
+  final String deleteUserDetails = "/user/";
 }
