@@ -6,7 +6,6 @@ import 'package:pet_nest/controllers/regController.dart';
 import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import '../../components/squareTileImage.dart';
 
 class signupUserScreen extends StatelessWidget {
   signupUserScreen({super.key});
@@ -102,19 +101,18 @@ class signupUserScreen extends StatelessWidget {
                         _regController.userNameController.text,
                         _regController.passwordController.text,
                       );
-              
-                      if (errorMessage != null) {
-                        Get.snackbar(
-                          "Validation Error",
-                          errorMessage,
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.redAccent,
-                          colorText: Colors.white,
+                    if (errorMessage != null) {
+                      Get.snackbar(
+                        "Validation Error",
+                        errorMessage,
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.redAccent,
+                        colorText: Colors.white,
                         );
                       } else {
-                        _regController.sendOtp();
-                        showOtpDialog(context);
-                      }
+                      _regController.sendOtp();
+                      showOtpDialog(context);
+                    }
                     },
                   ),
 

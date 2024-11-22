@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_nest/controllers/sessionController.dart';
-import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 
@@ -35,7 +34,7 @@ class loginController extends GetxController {
       http.Response response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
-        _sessionController.isLoggedIn.value = true;
+        _sessionController.createSession(userNameController.text.trim());
 
         Get.snackbar(
           "Success",
@@ -49,7 +48,6 @@ class loginController extends GetxController {
         clearFields();
 
         //check Session
-        _sessionController.checkSession();
 
         // Navigate to the landing screen
         Get.off(() => landingScreen());

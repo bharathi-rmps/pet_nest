@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pet_nest/screens/landingScreen.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
+import 'package:pet_nest/controllers/sessionController.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await GetStorage.init(); // Initialize storage
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final sessionController _sessionController = Get.put(sessionController());
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: loginUserScreen(),
-       );
+      debugShowCheckedModeBanner: false,
+      home: Obx(() => _sessionController.isLoggedIn.value
+          ? landingScreen()
+          : loginUserScreen()
+      ),
+    );
   }
 }
-

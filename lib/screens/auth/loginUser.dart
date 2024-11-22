@@ -57,7 +57,6 @@ class loginUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _sessionController.checkSession();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[300],

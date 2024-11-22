@@ -12,6 +12,8 @@ class regController extends GetxController {
   var isLoading = false.obs;
   var isOtpSent = false.obs;
 
+  int uid = 1;
+
   //controller instance for session management
   final sessionController _sessionController = Get.put(sessionController());
 
@@ -51,6 +53,7 @@ class regController extends GetxController {
         apiEndpoint.baseUrl + apiEndpoint.authEndPoints.reg,
       );
       Map body = {
+        "id": uid,
         "username": userNameController.text.trim(),
         "firstName": firstNameController.text.trim(),
         "lastName": lastNameController.text.trim(),
@@ -69,7 +72,7 @@ class regController extends GetxController {
           backgroundColor: Get.theme.primaryColor,
           colorText: Get.theme.colorScheme.primaryContainer,
         );
-        _sessionController.isLoggedIn.value = true;
+        _sessionController.createSession(userNameController.text.trim());
         Get.off(() => landingScreen());
         clearFields();
       } else {
@@ -82,6 +85,7 @@ class regController extends GetxController {
         );
       }
     } catch (e) {
+      uid--;
       Get.snackbar(
         "Exception",
         "Error while registering: $e",
@@ -156,6 +160,8 @@ class regController extends GetxController {
       return;
     }
     if (otpController.text.trim() == "1234") {
+      uid++;
+      registerUser();
       Get.snackbar(
         "Success",
         "OTP Verified",
@@ -163,7 +169,6 @@ class regController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      registerUser();
     } else {
       Get.snackbar(
         "Error",
