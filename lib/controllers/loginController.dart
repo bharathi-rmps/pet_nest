@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pet_nest/controllers/sessionController.dart';
+import 'package:pet_nest/screens/auth/loginUser.dart';
+import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 
-class LoginController extends GetxController {
+class loginController extends GetxController {
   // TextEditingControllers
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  //controller instance for session management
+  final sessionController _sessionController = Get.put(sessionController());
+
   // Reactive properties
-  var isLoggedIn = false.obs;
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 
@@ -30,7 +35,8 @@ class LoginController extends GetxController {
       http.Response response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
-        isLoggedIn.value = true;
+        _sessionController.isLoggedIn.value = true;
+
         Get.snackbar(
           "Success",
           "Login successful!",
@@ -40,10 +46,15 @@ class LoginController extends GetxController {
         );
 
         // Clear input fields
-        userNameController.clear();
-        passwordController.clear();
+        clearFields();
+
+        //check Session
+        _sessionController.checkSession();
+
+        // Navigate to the landing screen
+        Get.off(() => landingScreen());
       } else {
-        isLoggedIn.value = false;
+        _sessionController.isLoggedIn.value = false;
         errorMessage.value = "Login failed: ${response.reasonPhrase}";
         Get.snackbar(
           "Error",
@@ -72,4 +83,5 @@ class LoginController extends GetxController {
     userNameController.clear();
     passwordController.clear();
   }
+
 }

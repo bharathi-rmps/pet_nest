@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,9 @@ class regController extends GetxController {
   // Form submission status
   var isLoading = false.obs;
   var isOtpSent = false.obs;
+
+  //controller instance for session management
+  final sessionController _sessionController = Get.put(sessionController());
 
   // TextEditingControllers
   TextEditingController userNameController = TextEditingController();
@@ -65,6 +69,7 @@ class regController extends GetxController {
           backgroundColor: Get.theme.primaryColor,
           colorText: Get.theme.colorScheme.primaryContainer,
         );
+        _sessionController.isLoggedIn.value = true;
         Get.off(() => landingScreen());
         clearFields();
       } else {
@@ -107,6 +112,16 @@ class regController extends GetxController {
 
   // Send OTP (simulate for now)
   void sendOtp() {
+    if(phoneController == ""){
+      Get.snackbar(
+        "Validation Error",
+        "Phone number cannot be empty",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
     isOtpSent.value = true; // Set OTP sent state
     Get.snackbar(
       "OTP Sent",
@@ -119,6 +134,27 @@ class regController extends GetxController {
 
   // Validate OTP (dummy check for demonstration)
   void validateOtp(BuildContext context) {
+
+    if (phoneController.text.trim().isEmpty || phoneController.text.trim().length <= 3){
+      Get.snackbar(
+        "Error",
+        "Phone number cannot be empty",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
+    if(otpController.text.trim() == ""){
+      Get.snackbar(
+        "Error",
+        "OTP cannot be empty",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
     if (otpController.text.trim() == "1234") {
       Get.snackbar(
         "Success",
@@ -137,5 +173,7 @@ class regController extends GetxController {
         colorText: Colors.white,
       );
     }
+    otpController.clear();
+    phoneController.clear();
   }
 }

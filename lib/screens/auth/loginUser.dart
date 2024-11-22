@@ -8,11 +8,14 @@ import 'package:pet_nest/controllers/loginController.dart';
 import 'package:pet_nest/screens/auth/signupUser.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 
-class loginUser extends StatelessWidget {
-  loginUser({super.key});
+import '../../controllers/sessionController.dart';
+
+class loginUserScreen extends StatelessWidget {
+  loginUserScreen({super.key});
 
   // Use GetX to retrieve the controller instance
-  final LoginController _loginController = Get.put(LoginController());
+  final loginController _loginController = Get.put(loginController());
+  final sessionController _sessionController = Get.put(sessionController());
 
   // Input validation
   String? validateInput(String username, String password) {
@@ -34,7 +37,6 @@ class loginUser extends StatelessWidget {
   void userSignin() async {
     String username = _loginController.userNameController.text.trim();
     String password = _loginController.passwordController.text.trim();
-
     String? errorMessage = validateInput(username, password);
 
     if (errorMessage != null) {
@@ -47,7 +49,7 @@ class loginUser extends StatelessWidget {
       );
     } else {
       await _loginController.loginUser();
-      if (_loginController.isLoggedIn.value) {
+      if (_sessionController.isLoggedIn.value) {
         Get.off(() => landingScreen());
       }
     }
@@ -55,8 +57,9 @@ class loginUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _sessionController.checkSession();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
@@ -68,9 +71,23 @@ class loginUser extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Top icon
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
+                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image.asset(
+                            "lib/assets/pet.png",
+                            height: 85,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
                   // Login to continue text
@@ -160,8 +177,8 @@ class loginUser extends StatelessWidget {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      squareTileImage(imgPath: 'lib/assets/google.png'),
-                      squareTileImage(imgPath: 'lib/assets/apple.png'),
+                      squareTileImage(imgPath: 'lib/assets/google.png', imgSize: 65,),
+                      squareTileImage(imgPath: 'lib/assets/apple.png', imgSize: 65,),
                     ],
                   ),
 
@@ -178,7 +195,8 @@ class loginUser extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => signupUser());
+                          _loginController.clearFields();
+                          Get.to(() => signupUserScreen());
                         },
                         child: const Text(
                           "Register Now!",
