@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
@@ -40,7 +39,7 @@ class sessionController extends GetxController {
     isLoggedIn.value = true;
     username.value = userName;
     _storage.write('isLoggedIn', true);
-    _storage.write('username', userName); // Persist username
+    _storage.write('username', userName);
     getUserDetails(userName);
     print("Session created: $isLoggedIn, Username: $username");
   }
