@@ -6,7 +6,7 @@ void futureFeature() {
     "Under Development",
     "This feature will be available shortly",
     snackPosition: SnackPosition.BOTTOM,
-    backgroundColor: Colors.redAccent,
+    backgroundColor: Colors.deepOrangeAccent,
     colorText: Colors.white,
   );
 }

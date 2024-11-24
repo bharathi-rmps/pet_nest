@@ -6,8 +6,6 @@ import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 
-import 'navigationController.dart';
-
 class profileController extends GetxController {
 
   //controller instance for session management

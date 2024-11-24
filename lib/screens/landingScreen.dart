@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
-import 'package:pet_nest/screens/profileScreen.dart';
+import 'package:pet_nest/screens/mainScreens/profileScreen.dart';
+import 'package:pet_nest/screens/mainScreens/shopScreen.dart';
 
 import '../controllers/navigationController.dart';
 
@@ -23,14 +23,16 @@ class landingScreen extends StatelessWidget  {
         // Update body content based on selected index
         switch (_navigationController.selectedIndex.value) {
           case 0:
-            return Center(
-                child: Text('Shop Page')
-            );
+            return shopScreen();
           case 1:
+            return Center(
+                child: Text('Manage Pet')
+            );
+          case 2:
             return Center(
                 child: Text('Cart Page')
             );
-          case 2:
+          case 3:
             return profileScreen();
           default:
             return Center(
@@ -45,8 +47,12 @@ class landingScreen extends StatelessWidget  {
           onTap: (index) {
             _navigationController.changeIndex(index);
           },
+          selectedItemColor: Colors.deepOrangeAccent,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.white,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Shop'),
+            BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Manage Pet'),
             BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
             BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Profile'),
           ],

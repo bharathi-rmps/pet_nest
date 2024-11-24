@@ -2,6 +2,7 @@ class apiEndpoint{
   static final String baseUrl = "https://petstore.swagger.io/v2";
   static AuthEndPoints authEndPoints = AuthEndPoints();
   static UserEndpoints userEndpoints = UserEndpoints();
+  static PetEndPoints petEndpoints = PetEndPoints();
 }
 
 class AuthEndPoints{
@@ -14,4 +15,11 @@ class UserEndpoints{
   final String getUserDetails = "/user/";
   final String updateUserDetails = "/user/";
   final String deleteUserDetails = "/user/";
+}
+
+class PetEndPoints{
+  final String addPet = "/pet";
+  final String getPetByStatus = "/pet/findByStatus?status=bharathiRMPS";
+  final String getPetById = "/pet/";
+  final String deletePet = "/pet/";
 }
