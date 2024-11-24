@@ -3,6 +3,7 @@ class apiEndpoint{
   static AuthEndPoints authEndPoints = AuthEndPoints();
   static UserEndpoints userEndpoints = UserEndpoints();
   static PetEndPoints petEndpoints = PetEndPoints();
+  static StoreEndPoints storeEndpoints = StoreEndPoints();
 }
 
 class AuthEndPoints{
@@ -19,7 +20,13 @@ class UserEndpoints{
 
 class PetEndPoints{
   final String addPet = "/pet";
-  final String getPetByStatus = "/pet/findByStatus?status=bharathiRMPS";
-  final String getPetById = "/pet/";
+  final String editPet = "/pet";
   final String deletePet = "/pet/";
+  final String getPetByStatusAvailable = "/pet/findByStatus?status=bharathiRMPSavailable";
+  final String getPetByStatusSold = "/pet/findByStatus?status=bharathiRMPSsold";
+  final String getPetById = "/pet/";
+}
+
+class StoreEndPoints{
+  final String placeOrder = "/store/order";
 }

@@ -6,7 +6,7 @@ import 'package:pet_nest/controllers/profileController.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/auth/loginUser.dart';
 
-import 'editProfileScreen.dart';
+import 'subMainScreens/editProfileScreen.dart';
 
 class profileScreen extends StatelessWidget {
   profileScreen({super.key});

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pet_nest/components/promptBox.dart';
 import '../controllers/petDetailsController.dart';
+import 'package:get/get.dart';
 
 class cardContent extends StatelessWidget {
   final List<Pet> pets;
 
-  const cardContent({
+  cardContent({
     super.key,
     required this.pets,
   });
+
+  petDetailsController _petDetailsController = Get.put(petDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +85,15 @@ class cardContent extends StatelessWidget {
                       //adopt button
                       child: ElevatedButton(
                         onPressed: () {
-                          print("Adopt ${pet.name}");
+                          promptBox.show(
+                            context: context,
+                            title: "Adopt Pet Confirmation",
+                            content: "Are you sure you want to adopt this pet?",
+                            onConfirm: () {
+                              _petDetailsController.adoptPet(pet.id);
+                              print("pressed: " + pet.id.toString());
+                            },
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepOrangeAccent,

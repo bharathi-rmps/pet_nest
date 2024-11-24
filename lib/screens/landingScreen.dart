@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
+import 'package:pet_nest/screens/mainScreens/managePet.dart';
 import 'package:pet_nest/screens/mainScreens/profileScreen.dart';
 import 'package:pet_nest/screens/mainScreens/shopScreen.dart';
 
@@ -25,9 +26,7 @@ class landingScreen extends StatelessWidget  {
           case 0:
             return shopScreen();
           case 1:
-            return Center(
-                child: Text('Manage Pet')
-            );
+            return managePet();
           case 2:
             return Center(
                 child: Text('Cart Page')

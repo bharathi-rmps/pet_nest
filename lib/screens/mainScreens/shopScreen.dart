@@ -15,7 +15,9 @@ class shopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _petDetailsController.getPetDetails();
+    _petDetailsController.getAvailablePetDetails();
+    _petDetailsController.getSoldPetDetails();
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -112,10 +114,10 @@ class shopScreen extends StatelessWidget {
 
                       // Cards Grid
                       Obx(() {
-                          if(_petDetailsController.petList.isEmpty){
+                          if(_petDetailsController.availablePetList.isEmpty & _petDetailsController.soldPetList.isEmpty){
                             return const Center(child: CircularProgressIndicator());
                           }
-                          return cardContent(pets: _petDetailsController.petList);
+                          return cardContent(pets: _petDetailsController.availablePetList);
                       }
 
                       ),
