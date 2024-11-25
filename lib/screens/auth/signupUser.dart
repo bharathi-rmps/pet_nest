@@ -47,7 +47,7 @@ class signupUserScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
                   Text(
-                    "Hi, please login or signup to continue!",
+                    "Hi, please register to continue!",
                     style: TextStyle(color: Colors.grey[700], fontSize: 16),
                   ),
 

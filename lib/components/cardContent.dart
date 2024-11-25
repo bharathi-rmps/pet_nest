@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_nest/components/promptBox.dart';
+import 'package:pet_nest/screens/landingScreen.dart';
 import '../controllers/petDetailsController.dart';
 import 'package:get/get.dart';
 
@@ -90,8 +91,9 @@ class cardContent extends StatelessWidget {
                             title: "Adopt Pet Confirmation",
                             content: "Are you sure you want to adopt this pet?",
                             onConfirm: () {
-                              _petDetailsController.adoptPet(pet.id);
-                              print("pressed: " + pet.id.toString());
+                              _petDetailsController.adoptPet(pet.id, pet.category, pet.name, pet.imageUrl);
+                              //Get.off(() => landingScreen(selectedIndex: 1));
+                            //print("pressed: " + pet.id.toString());
                             },
                           );
                         },

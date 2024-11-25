@@ -70,7 +70,7 @@ class regController extends GetxController {
           colorText: Get.theme.colorScheme.primaryContainer,
         );
         _sessionController.createSession(userNameController.text.trim());
-        Get.off(() => landingScreen());
+        Get.off(() => landingScreen(selectedIndex: 0,));
         clearFields();
       } else {
         Get.snackbar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/profileFields.dart';
 import 'package:pet_nest/controllers/petDetailsController.dart';
 import 'package:pet_nest/screens/mainScreens/subMainScreens/addPetScreen.dart';
@@ -12,8 +13,8 @@ class managePet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _petDetailsController.availablePetList();
-    _petDetailsController.soldPetList();
+    _petDetailsController.getPetDetails();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[300],
@@ -32,17 +33,19 @@ class managePet extends StatelessWidget {
 
                 //Available Pet Count
                 const SizedBox(height: 30,),
-                profileFields(
-                    title: "Available Pet Count",
-                    subTitle: _petDetailsController.availablePetList.length.toString(),
-                    isObscured: false ),
+                Obx(() => profileFields(
+                  title: "Available Pet Count",
+                  subTitle: _petDetailsController.availablePetList.length.toString(),
+                  isObscured: false,
+                )),
 
                 //Adopted Pet Count
                 const SizedBox(height: 10,),
-                profileFields(
-                    title: "Adopted Pet Count",
-                    subTitle: _petDetailsController.soldPetList.length.toString(),
-                    isObscured: false ),
+                Obx(() => profileFields(
+                  title: "Adopted Pet Count",
+                  subTitle: _petDetailsController.soldPetList.length.toString(),
+                  isObscured: false,
+                )),
 
 
                 //manage buttons
@@ -54,32 +57,37 @@ class managePet extends StatelessWidget {
                     //add pet button
                     Padding(
                       padding: const EdgeInsets.all(5),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.off(()=> addPetScreen());
-                        },
-                        child: Text("Add Pet"),
-                      ),
+                      child: elevatedButtons(
+                          onPressed: () {
+                            Get.off(()=> addPetScreen());
+                          },
+                          data: "Add Pet",
+                          color: Colors.deepOrangeAccent,
+                          size: 14),
                     ),
 
                     //edit pet button
                     Padding(
                       padding: const EdgeInsets.all(5),
-                      child: ElevatedButton(onPressed: () {
-                        Get.off(() => editPetScreen()
-                        );
-                      }, child: Text("Edit Pet")),
+                      child: elevatedButtons(
+                          onPressed: () {
+                            Get.off(()=> editPetScreen());
+                          },
+                          data: "Edit Pet",
+                          color: Colors.deepOrangeAccent,
+                          size: 14),
                     ),
 
                     //delete pet button
                     Padding(
                       padding: const EdgeInsets.all(5),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.off(() => deletePetScreen());
-                        },
-                        child: Text("Delete Pet"),
-                      ),
+                      child: elevatedButtons(
+                          onPressed: () {
+                            Get.off(()=> deletePetScreen());
+                          },
+                          data: "Delete Pet",
+                          color: Colors.deepOrangeAccent,
+                          size: 14),
                     ),
 
                   ],

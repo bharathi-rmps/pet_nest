@@ -22,8 +22,7 @@ class PetEndPoints{
   final String addPet = "/pet";
   final String editPet = "/pet";
   final String deletePet = "/pet/";
-  final String getPetByStatusAvailable = "/pet/findByStatus?status=bharathiRMPSavailable";
-  final String getPetByStatusSold = "/pet/findByStatus?status=bharathiRMPSsold";
+  final String getPetByTags = "/pet/findByTags?tags=bharathiRMPSavailable";
   final String getPetById = "/pet/";
 }
 

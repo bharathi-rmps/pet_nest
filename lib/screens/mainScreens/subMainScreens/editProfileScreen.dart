@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_nest/components/elevatedButtons.dart';
+import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/components/textField.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
@@ -25,7 +27,6 @@ class editProfileScreen extends StatelessWidget {
 
   // Validate input
   String? validateInput(String firstName, String lastName, String email, String username, String password) {
-    print("firstname, $firstName");
     if (username.isEmpty) return "Username cannot be empty";
     if (firstName.isEmpty) return "First Name cannot be empty";
     if (lastName.isEmpty) return "Last Name cannot be empty";
@@ -119,40 +120,56 @@ class editProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
 
-                  //save changes button
-                  ElevatedButton(
-                    onPressed: () async{
-                      String? errorMessage = validateInput(firstNameController.text, lastNameController.text, emailController.text, usernameController.text, passwordController.text);
-                      if(errorMessage != null){
-                        Get.snackbar(
-                          "Validation Error",
-                          errorMessage,
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.redAccent,
-                          colorText: Colors.white,
-                        );
-                      } else{
-                        // Save the changes
-                        _sessionController.username.value = usernameController.text;
-                        _sessionController.password.value = passwordController.text;
-                        _sessionController.firstname.value = firstNameController.text;
-                        _sessionController.lastname.value = lastNameController.text;
-                        _sessionController.email.value = emailController.text;
-                        _sessionController.phone.value = phoneController.text;
-
-                        //api call to update
-                        await _profileController.updateUser();
-                      }
-                    },
-                    child: const Text("Save"),
-                  ),
-
                   //go back button
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.off(() => landingScreen());
+                  elevatedButtons(
+                      onPressed: (){
+                    Get.off(() => landingScreen(selectedIndex: 2,));
                     },
-                    child: const Text("Cancel"),
+                      data: "Cancel",
+                      color: Colors.deepOrangeAccent,
+                      size: 18),
+
+                  //save changes button
+                  elevatedButtons(
+                      onPressed: () {
+                        promptBox.show(
+                          context: context,
+                          title: "Edit Details Confirmation",
+                          content: "Are you sure you want to Save the Changes?",
+                          onConfirm: () async{
+                            String? errorMessage = validateInput(
+                                firstNameController.text,
+                                lastNameController.text,
+                                emailController.text,
+                                usernameController.text,
+                                passwordController.text
+                            );
+                            if(errorMessage != null){
+                              Get.snackbar(
+                                "Validation Error",
+                                errorMessage,
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.redAccent,
+                                colorText: Colors.white,
+                              );
+                            } else{
+                              // Save the changes
+                              _sessionController.username.value = usernameController.text;
+                              _sessionController.password.value = passwordController.text;
+                              _sessionController.firstname.value = firstNameController.text;
+                              _sessionController.lastname.value = lastNameController.text;
+                              _sessionController.email.value = emailController.text;
+                              _sessionController.phone.value = phoneController.text;
+
+                              //api call to update
+                              await _profileController.updateUser();
+                            }
+                          },
+                        );
+                      },
+                      data: "Save Changes",
+                      color: Colors.deepOrangeAccent,
+                      size: 16
                   ),
 
                 ],

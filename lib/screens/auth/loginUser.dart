@@ -49,9 +49,6 @@ class loginUserScreen extends StatelessWidget {
       );
     } else {
       await _loginController.loginUser();
-      if (_sessionController.isLoggedIn.value) {
-        Get.off(() => landingScreen());
-      }
     }
   }
 
@@ -92,7 +89,7 @@ class loginUserScreen extends StatelessWidget {
                   // Login to continue text
                   const SizedBox(height: 50),
                   Text(
-                    "Hi, please login or signup to continue!",
+                    "Hi, please login continue!",
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: 16,

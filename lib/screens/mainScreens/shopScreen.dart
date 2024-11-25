@@ -6,6 +6,7 @@ import 'package:pet_nest/controllers/petDetailsController.dart';
 import 'package:get/get.dart';
 
 class shopScreen extends StatelessWidget {
+
   // Lists for card data
   late final List<String> imageList;
   late final List<String> petCategoryList;
@@ -15,8 +16,7 @@ class shopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _petDetailsController.getAvailablePetDetails();
-    _petDetailsController.getSoldPetDetails();
+   _petDetailsController.getPetDetails();
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -114,13 +114,46 @@ class shopScreen extends StatelessWidget {
 
                       // Cards Grid
                       Obx(() {
-                          if(_petDetailsController.availablePetList.isEmpty & _petDetailsController.soldPetList.isEmpty){
-                            return const Center(child: CircularProgressIndicator());
-                          }
-                          return cardContent(pets: _petDetailsController.availablePetList);
-                      }
+                        // check if data is still loading
+                        if (_petDetailsController.isLoading.value) {
+                          return const Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 100,),
+                                CircularProgressIndicator(),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Loading...",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
 
-                      ),
+                        // check if list is empty
+                        if (_petDetailsController.availablePetList.isEmpty) {
+                          return const Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 100,),
+                                Icon(Icons.pets, size: 50, color: Colors.grey),
+                                SizedBox(height: 10),
+                                Text(
+                                  "No Pet Found",
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        // display the content
+                        return cardContent(pets: _petDetailsController.availablePetList);
+                      })
+
                     ],
                   ),
                 ),

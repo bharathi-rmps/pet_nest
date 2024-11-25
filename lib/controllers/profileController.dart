@@ -34,7 +34,7 @@ class profileController extends GetxController {
       http.Response response = await http.put(url, body: jsonEncode(body), headers: headers);
       if (response.statusCode == 200) {
         _sessionController.saveSessionToStorage();
-        Get.off(() => landingScreen());
+        Get.off(() => landingScreen(selectedIndex: 2,));
         //print('API Response: ${response.body}');
         Get.snackbar(
           "Success",

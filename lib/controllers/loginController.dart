@@ -47,10 +47,8 @@ class loginController extends GetxController {
         // Clear input fields
         clearFields();
 
-        //check Session
-
         // Navigate to the landing screen
-        Get.off(() => landingScreen());
+        Get.off(() => landingScreen(selectedIndex: 0,));
       } else {
         _sessionController.isLoggedIn.value = false;
         errorMessage.value = "Login failed: ${response.reasonPhrase}";

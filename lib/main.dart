@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Obx(() => _sessionController.isLoggedIn.value
-          ? landingScreen()
+          ? landingScreen(selectedIndex: 0,)
           : loginUserScreen()
       ),
     );
