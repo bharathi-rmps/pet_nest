@@ -72,7 +72,7 @@ class sessionController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print("data: $data");
+        //print("data: $data");
 
         // Extract and store details
         id.value = data['id'] ?? 0;
@@ -87,10 +87,24 @@ class sessionController extends GetxController {
         saveSessionToStorage();
 
       } else {
-        print("Failed to fetch user details: ${response.statusCode}");
+        Get.snackbar(
+          "Error",
+          "Error Details",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.theme.colorScheme.error,
+          colorText: Get.theme.primaryColorLight,
+        );
+        //print("Failed to fetch user details: ${response.statusCode}");
       }
     } catch (e) {
-      print("Error while fetching user details: $e");
+      Get.snackbar(
+        "Error",
+        "Error Details, $e",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Get.theme.colorScheme.error,
+        colorText: Get.theme.primaryColorLight,
+      );
+      //print("Error while fetching user details: $e");
     }
   }
 

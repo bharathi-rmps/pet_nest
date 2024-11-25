@@ -6,18 +6,16 @@ import 'package:pet_nest/controllers/petDetailsController.dart';
 import 'package:get/get.dart';
 
 class shopScreen extends StatelessWidget {
+
   // Lists for card data
   late final List<String> imageList;
   late final List<String> petCategoryList;
   late final List<String> petNameList;
 
-  petDetailsController _petDetailsController = Get.put(petDetailsController());
+  final petDetailsController _petDetailsController = Get.find<petDetailsController>();
 
   @override
   Widget build(BuildContext context) {
-    _petDetailsController.getAvailablePetDetails();
-    _petDetailsController.getSoldPetDetails();
-
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -112,15 +110,24 @@ class shopScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
 
-                      // Cards Grid
+                      // check if data is still loading
                       Obx(() {
-                          if(_petDetailsController.availablePetList.isEmpty & _petDetailsController.soldPetList.isEmpty){
-                            return const Center(child: CircularProgressIndicator());
-                          }
-                          return cardContent(pets: _petDetailsController.availablePetList);
-                      }
+                        // loading bar
+                        if (_petDetailsController.isLoading.value) {
+                          return _buildLoadingView();
+                        }
 
-                      ),
+                        //no pet found
+                        else if (_petDetailsController.availablePetList.isEmpty) {
+                          return _buildLoadingView();
+                        }
+
+                        // Cards Grid
+                        else {
+                          return _buildPetList();
+                        }
+                      })
+
                     ],
                   ),
                 ),
@@ -129,6 +136,47 @@ class shopScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildLoadingView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          CircularProgressIndicator(),
+          SizedBox(height: 80),
+          Text(
+            "Loading...",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          SizedBox(height: 80),
+          Icon(Icons.pets, size: 50, color: Colors.grey),
+          SizedBox(height: 10),
+          Text(
+            "No Pet Found",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPetList() {
+    return cardContent(
+      pets: _petDetailsController.availablePetList,
+      showButton: true,
+      height: 0.7,
     );
   }
 }
@@ -171,3 +219,4 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
+

@@ -16,7 +16,7 @@ class signupButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: const Center(child: Text(
-          "Sign Up", style: TextStyle(
+          "Register", style: TextStyle(
           color: Colors.white,
           fontSize: 17,
           fontWeight: FontWeight.bold,

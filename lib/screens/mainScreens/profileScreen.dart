@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/profileFields.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/profileController.dart';
@@ -20,14 +21,16 @@ class profileScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[300],
-        body: Padding(
-          padding: const EdgeInsets.all(10),
-          child: SafeArea(
-            child: Obx(() {
-              if(_sessionController.firstname.value == ''.obs){
-                return Center(child: CircularProgressIndicator(),);
-              }
-              return Column(
+        body: SafeArea(child:
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SafeArea(
+                child: Obx(() {
+                  if(_sessionController.firstname.value == ''.obs){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
@@ -79,53 +82,68 @@ class profileScreen extends StatelessWidget {
                         children: [
                           //edit profile button
                           Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: ElevatedButton(onPressed: () {
-                              Get.off(() => editProfileScreen());
-                            }, child: Text("Edit Profile")),
+                            padding: const EdgeInsets.all(2),
+                            child:
+                            elevatedButtons(
+                                onPressed: () {
+                                  Get.to(() => editProfileScreen());
+                                },
+                                data: "Edit Profile",
+                                color: Colors.deepOrangeAccent,
+                                size: 14
+                            ),
                           ),
 
                           //delete profile button
                           Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Show confirmation dialog
-                                promptBox.show(
-                                    context: context,
-                                    title: "Delete Profile",
-                                    content: "Are you sure? you want to delete your profile",
-                                    onConfirm: (){
-                                      _profileController.deleteUser();
-                                    });
-                              },
-                              child: Text("Delete Profile"),
+                            padding: const EdgeInsets.all(2),
+                            child:
+                            elevatedButtons(
+                                onPressed: () {
+                                  // show confirmation dialog
+                                  promptBox.show(
+                                      context: context,
+                                      title: "Delete Profile",
+                                      content: "Are you sure? you want to delete your profile",
+                                      onConfirm: (){
+                                        _profileController.deleteUser();
+                                      });
+                                },
+                                data: "Delete Profile",
+                                color: Colors.deepOrangeAccent,
+                                size: 14
                             ),
                           ),
 
+                          //logout button
                           Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Show confirmation dialog
-                                promptBox.show(
-                                  context: context,
-                                  title: "Logout Account",
-                                  content: "Are you sure you want to logout?",
-                                  onConfirm: () {
-                                    _sessionController.logout();
-                                  },
-                                );
-                              },
-                              child: Text("Logout"),
+                            padding: const EdgeInsets.all(2),
+                            child:
+                            elevatedButtons(
+                                onPressed: () {
+                                  // show confirmation dialog
+                                  promptBox.show(
+                                      context: context,
+                                      title: "Logout Profile",
+                                      content: "Are you sure? you want to logout your profile",
+                                      onConfirm: (){
+                                        _sessionController.logout();
+                                      });
+                                },
+                                data: "Logout",
+                                color: Colors.deepOrangeAccent,
+                                size: 14
                             ),
                           ),
+
                         ],
                       ),
                     ],
-                );
-            }),
+                  );
+                }),
 
+              ),
+            ),
           ),
         ),
     );

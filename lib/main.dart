@@ -5,8 +5,11 @@ import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/screens/auth/loginUser.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
 
+import 'controllers/petDetailsController.dart';
+
 void main() async {
-  await GetStorage.init(); // Initialize storage
+  await GetStorage.init();
+  Get.put(petDetailsController());
   runApp(MyApp());
 }
 
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Obx(() => _sessionController.isLoggedIn.value
-          ? landingScreen()
+          ? landingScreen(selectedIndex: 0,)
           : loginUserScreen()
       ),
     );

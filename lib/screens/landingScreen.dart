@@ -8,15 +8,19 @@ import 'package:pet_nest/screens/mainScreens/shopScreen.dart';
 import '../controllers/navigationController.dart';
 
 class landingScreen extends StatelessWidget  {
-  landingScreen({super.key});
+  landingScreen({
+    super.key,
+    required this.selectedIndex,
+  });
 
+  final int selectedIndex;
   final sessionController _sessionController = Get.put(sessionController());
   final navigationController _navigationController = Get.put(navigationController());
 
   @override
   Widget build(BuildContext context) {
     if (_sessionController.isLoggedIn.value) {
-      _navigationController.selectedIndex.value = 0;
+      _navigationController.selectedIndex.value = selectedIndex;
     }
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -28,10 +32,6 @@ class landingScreen extends StatelessWidget  {
           case 1:
             return managePet();
           case 2:
-            return Center(
-                child: Text('Cart Page')
-            );
-          case 3:
             return profileScreen();
           default:
             return Center(
@@ -52,7 +52,6 @@ class landingScreen extends StatelessWidget  {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Shop'),
             BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Manage Pet'),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
             BottomNavigationBarItem(icon: Icon(Icons.account_box), label: 'Profile'),
           ],
         );
