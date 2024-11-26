@@ -20,7 +20,7 @@ class loginController extends GetxController {
   // Login function
   Future<void> loginUser() async {
     isLoading.value = true;
-    errorMessage.value = ''; // Clear any previous error messages
+    errorMessage.value = '';
 
     try {
       var url = Uri.parse(

@@ -112,6 +112,7 @@ class shopScreen extends StatelessWidget {
 
                       // check if data is still loading
                       Obx(() {
+
                         // loading bar
                         if (_petDetailsController.isLoading.value) {
                           return _buildLoadingView();
@@ -119,7 +120,7 @@ class shopScreen extends StatelessWidget {
 
                         //no pet found
                         else if (_petDetailsController.availablePetList.isEmpty) {
-                          return _buildLoadingView();
+                          return _buildEmptyView();
                         }
 
                         // Cards Grid
@@ -144,8 +145,9 @@ class shopScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
-          CircularProgressIndicator(),
           SizedBox(height: 80),
+          CircularProgressIndicator(),
+          SizedBox(height: 10),
           Text(
             "Loading...",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -179,9 +181,10 @@ class shopScreen extends StatelessWidget {
       height: 0.7,
     );
   }
+
 }
 
-// Search Bar Component
+// search Bar Component
 class SearchBar extends StatelessWidget {
   final VoidCallback? onTap;
 

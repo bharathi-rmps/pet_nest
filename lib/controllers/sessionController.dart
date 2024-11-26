@@ -23,7 +23,7 @@ class sessionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Check persisted session status
+    // check persisted session status
     isLoggedIn.value = _storage.read('isLoggedIn') ?? false;
     id.value = _storage.read('id') ?? 0;
     username.value = _storage.read('username') ?? '';
@@ -35,15 +35,16 @@ class sessionController extends GetxController {
     userStatus.value = _storage.read('userStatus') ?? 0;
   }
 
-  // Set session
-  void createSession(String userName) {
+  // set session
+  int createSession(String userName) {
     isLoggedIn.value = true;
     username.value = userName;
     _storage.write('isLoggedIn', true);
     getUserDetails(userName);
+    return 0;
   }
 
-  // Clear session
+  // clear session
   void logout() {
     isLoggedIn.value = false;
     id.value = 0;
@@ -58,7 +59,7 @@ class sessionController extends GetxController {
     Get.off(() => loginUserScreen());
   }
 
-  // Get user details from API
+  // get user details from API
   Future<void> getUserDetails(String userName) async {
     var url = Uri.parse(
         apiEndpoint.baseUrl + apiEndpoint.userEndpoints.getUserDetails + userName);
@@ -74,7 +75,7 @@ class sessionController extends GetxController {
         var data = jsonDecode(response.body);
         //print("data: $data");
 
-        // Extract and store details
+        // extract and store details
         id.value = data['id'] ?? 0;
         firstname.value = data['firstName'] ?? '';
         lastname.value = data['lastName'] ?? '';
@@ -83,7 +84,7 @@ class sessionController extends GetxController {
         phone.value = data['phone']?.toString() ?? '';
         userStatus.value = data['userStatus'] ?? 0;
 
-        // Persist in storage with correct types
+        // persist in storage with correct types
         saveSessionToStorage();
 
       } else {
@@ -108,7 +109,7 @@ class sessionController extends GetxController {
     }
   }
 
-  //to save session, if updated
+  // to save session, if updated
   void saveSessionToStorage() {
     _storage.write("id", id.value);
     _storage.write("username", username.value);
