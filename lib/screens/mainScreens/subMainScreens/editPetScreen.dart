@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/petDetailsController.dart';
+import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 
 import '../../../components/textField.dart';
@@ -22,6 +23,8 @@ class editPetScreen extends StatelessWidget {
     if (petImageUrl.isEmpty) return "Pet Image URL cannot be empty";
     return null;
   }
+
+  sessionController _sessionController = Get.find<sessionController>();
 
   void updateTextFields(Pet pet) {
     petCategoryName.text = pet.category;
@@ -165,6 +168,7 @@ class editPetScreen extends StatelessWidget {
                                 petCategoryName.text,
                                 petName.text,
                                 petImageUrl.text,
+                                _sessionController.username.value
                               );
                               Get.off(() => landingScreen(selectedIndex: 1,));
                             },

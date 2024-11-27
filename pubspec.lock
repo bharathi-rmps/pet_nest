@@ -177,7 +177,7 @@ packages:
     source: hosted
     version: "4.3.0"
   intl_phone_number_input:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: intl_phone_number_input
       sha256: "1c4328713a9503ab26a1fdbb6b00b4cada68c18aac922b35bedbc72eff1297c3"

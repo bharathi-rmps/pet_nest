@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:get/get.dart';
-import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,12 +9,16 @@ class Pet {
   final String name;
   final String category;
   final String imageUrl;
+  final DateTime time;
+  final String addedBy;
 
   Pet({
     required this.id,
     required this.name,
     required this.category,
     required this.imageUrl,
+    required this.time,
+    required this.addedBy
   });
 
   factory Pet.fromJson(Map<String, dynamic> json) {
@@ -24,6 +27,8 @@ class Pet {
       name: json['name'],
       category: json['category']['name'],
       imageUrl: json['photoUrls'][0],
+      time: DateTime.parse(json['tags'][1]['name']),
+      addedBy: json['tags'][2]['name']
     );
   }
 }
@@ -49,6 +54,10 @@ class petDetailsController extends GetxController {
     return id;
   }
 
+  DateTime getCurrentTime(){
+    DateTime currentTime = DateTime.now();
+    return currentTime;
+  }
 
   Future<void> getPetDetails() async {
     try {
@@ -100,13 +109,15 @@ class petDetailsController extends GetxController {
     }
   }
 
-  Future<void> addPet(String categoryName, String name, String imageUrl) async {
+  Future<void> addPet(String categoryName, String name, String imageUrl, String username) async {
     try {
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.addPet);
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
+      String time = getCurrentTime().toString();
+
       Map<String, dynamic> body = {
         "id": petIdGenerator(id),
         "category": {
@@ -116,9 +127,17 @@ class petDetailsController extends GetxController {
         "name": name,
         "photoUrls": [imageUrl],
         "tags": [ {
-          "id": 1,
-          "name": "bharathiRMPSavailable"
+            "id": 1,
+            "name": "bharathiRMPSavailable"
           },
+          {
+            "id": 2,
+            "name": time
+          },
+          {
+            "id": 3,
+            "name": username
+          }
         ],
         "status": "available",
       };
@@ -156,13 +175,14 @@ class petDetailsController extends GetxController {
     }
   }
 
-  Future<void> editPet(int id, String categoryName, String name, String imageUrl) async {
+  Future<void> editPet(int id, String categoryName, String name, String imageUrl, String username) async {
     try {
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.editPet);
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
+      String time = getCurrentTime().toString();
 
       Map<String, dynamic> body = {
         "id": id,
@@ -175,6 +195,14 @@ class petDetailsController extends GetxController {
         "tags": [ {
           "id": 1,
           "name": "bharathiRMPSavailable"
+        },
+        {
+          "id": 2,
+          "name": time
+        },
+        {
+          "id": 3,
+          "name": username
         },
         ],
         "status": "available",
@@ -254,13 +282,14 @@ class petDetailsController extends GetxController {
     }
   }
 
-  Future<void> adoptPet(int petId, String categoryName, String name, String imageUrl) async {
+  Future<void> adoptPet(int petId, String categoryName, String name, String imageUrl, String username) async {
     try {
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.editPet);
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
+      String time = getCurrentTime().toString();
 
       Map<String, dynamic> body = {
         "id": petId,
@@ -273,7 +302,14 @@ class petDetailsController extends GetxController {
         "tags": [ {
           "id": 1,
           "name": "bharathiRMPSavailable"
+        },{
+          "id": 2,
+          "name": time
         },
+          {
+          "id": 3,
+          "name": username
+          }
         ],
         "status": "sold",
       };
@@ -286,7 +322,7 @@ class petDetailsController extends GetxController {
         availablePetList.removeWhere((pet) => pet.id == petId);
 
         // add the pet to the sold list (if needed)
-        soldPetList.add(Pet(id: petId, category: categoryName, name: name, imageUrl: imageUrl));
+        soldPetList.add(Pet(id: petId, category: categoryName, name: name, imageUrl: imageUrl, time: DateTime.parse(time), addedBy: username));
 
         //print("Pet adopted succesfully");
         Get.snackbar(

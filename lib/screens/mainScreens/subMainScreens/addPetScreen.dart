@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/petDetailsController.dart';
+import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
-import 'package:pet_nest/screens/mainScreens/managePet.dart';
 
 import '../../../components/textField.dart';
 
@@ -23,6 +23,7 @@ class addPetScreen extends StatelessWidget{
   }
 
   final petDetailsController _petDetailsController = Get.find<petDetailsController>();
+  final sessionController _sessionController = Get.find<sessionController>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +140,7 @@ class addPetScreen extends StatelessWidget{
                                  petCategoryName.text,
                                  petName.text,
                                  petImageUrl.text,
+                                 _sessionController.username.value
                                );
                                Get.off(() => landingScreen(selectedIndex: 1));
                              }

@@ -5,7 +5,6 @@ import 'package:pet_nest/components/profileFields.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/profileController.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
-import 'package:pet_nest/screens/auth/loginUser.dart';
 
 import 'subMainScreens/editProfileScreen.dart';
 

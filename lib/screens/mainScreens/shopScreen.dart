@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pet_nest/components/cardContent.dart';
+import 'package:get/get.dart';
+import 'package:pet_nest/components/contentForAll.dart';
+import 'package:pet_nest/components/contentForCategory.dart';
+import 'package:pet_nest/components/contentForRecents.dart';
 import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/futureFeature.dart';
-import 'package:pet_nest/controllers/petDetailsController.dart';
-import 'package:get/get.dart';
+
 
 class shopScreen extends StatelessWidget {
 
-  // Lists for card data
-  late final List<String> imageList;
-  late final List<String> petCategoryList;
-  late final List<String> petNameList;
-
-  final petDetailsController _petDetailsController = Get.find<petDetailsController>();
+  final selectedButton = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -73,61 +70,64 @@ class shopScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+
+                          //all button
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: elevatedButtons(
+                            child: Obx(() => elevatedButtons(
                               onPressed: () {
-                                futureFeature();
+                                selectedButton.value = 0;
                               },
                               data: "All",
-                              color: Colors.deepOrangeAccent,
+                              color: selectedButton.value == 0 ? Colors.deepOrangeAccent : Colors.grey,
                               size: 14,
+                             ),
                             ),
                           ),
+
+                          //category button
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: elevatedButtons(
+                            child: Obx(() => elevatedButtons(
                               onPressed: () {
-                                futureFeature();
+                                selectedButton.value = 1;
                               },
                               data: "Category",
-                              color: Colors.grey,
+                              color: selectedButton.value == 1 ? Colors.deepOrangeAccent : Colors.grey,
                               size: 14,
                             ),
+                           ),
                           ),
+
+                          //recents button
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: elevatedButtons(
+                            child: Obx(() => elevatedButtons(
                               onPressed: () {
-                                futureFeature();
+                                selectedButton.value = 2;
                               },
                               data: "Recents",
-                              color: Colors.grey,
+                              color: selectedButton.value == 2 ? Colors.deepOrangeAccent : Colors.grey,
                               size: 14,
                             ),
+                           ),
                           ),
+
                         ],
                       ),
+
+                      // cards
                       const SizedBox(height: 15),
-
-                      // check if data is still loading
                       Obx(() {
-
-                        // loading bar
-                        if (_petDetailsController.isLoading.value) {
-                          return _buildLoadingView();
+                        if (selectedButton.value == 0) {
+                          return contentForAll();
+                        } else if (selectedButton.value == 1) {
+                          return contentForCategory();
+                        } else if (selectedButton.value == 2) {
+                          return contentForRecents();
                         }
-
-                        //no pet found
-                        else if (_petDetailsController.availablePetList.isEmpty) {
-                          return _buildEmptyView();
-                        }
-
-                        // Cards Grid
-                        else {
-                          return _buildPetList();
-                        }
-                      })
+                        return const Text("Unknown Selection");
+                      }),
 
                     ],
                   ),
@@ -137,48 +137,6 @@ class shopScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildLoadingView() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(height: 80),
-          CircularProgressIndicator(),
-          SizedBox(height: 10),
-          Text(
-            "Loading...",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyView() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(height: 80),
-          Icon(Icons.pets, size: 50, color: Colors.grey),
-          SizedBox(height: 10),
-          Text(
-            "No Pet Found",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPetList() {
-    return cardContent(
-      pets: _petDetailsController.availablePetList,
-      showButton: true,
-      height: 0.7,
     );
   }
 

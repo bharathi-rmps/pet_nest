@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/sessionController.dart';
-import 'package:pet_nest/screens/landingScreen.dart';
 import '../controllers/petDetailsController.dart';
 import 'package:get/get.dart';
 
@@ -18,6 +17,7 @@ class cardContent extends StatelessWidget {
   });
 
   final petDetailsController _petDetailsController = Get.put(petDetailsController());
+  final sessionController _sessionController = Get.find<sessionController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +52,6 @@ class cardContent extends StatelessWidget {
                   height: 120,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  // loadingBuilder: (context, child, loadingProgress) {
-                  //   if (loadingProgress == null) return child;
-                  //   return Center(
-                  //     child: Column(
-                  //       children: [
-                  //         SizedBox(height: 30,),
-                  //         CircularProgressIndicator(),
-                  //       ],
-                  //     ),
-                  //   );
-                  // },
                   errorBuilder: (context, error, stackTrace) {
                     return Center(
                       child: Icon(Icons.broken_image, size: 50, color: Colors.grey),
@@ -113,7 +102,7 @@ class cardContent extends StatelessWidget {
                               title: "Adopt Pet Confirmation",
                               content: "Are you sure you want to adopt this pet?",
                               onConfirm: () async {
-                                await _petDetailsController.adoptPet(pet.id, pet.category, pet.name, pet.imageUrl);
+                                await _petDetailsController.adoptPet(pet.id, pet.category, pet.name, pet.imageUrl, _sessionController.username.value);
                                 //Get.off(() => landingScreen(selectedIndex: 1));
                                 //print("pressed: " + pet.id.toString());
                               },

@@ -6,7 +6,6 @@ import 'package:pet_nest/components/squareTileImage.dart';
 import 'package:pet_nest/components/textField.dart';
 import 'package:pet_nest/controllers/loginController.dart';
 import 'package:pet_nest/screens/auth/signupUser.dart';
-import 'package:pet_nest/screens/landingScreen.dart';
 
 import '../../controllers/sessionController.dart';
 

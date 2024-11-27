@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_nest/components/cardContent.dart';
-import 'package:pet_nest/components/elevatedButtons.dart';
-import 'package:pet_nest/components/profileFields.dart';
-import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/petDetailsController.dart';
-import 'package:pet_nest/controllers/profileController.dart';
-import 'package:pet_nest/controllers/sessionController.dart';
 
 class petHistoryScreen extends StatelessWidget {
   petHistoryScreen({super.key});
