@@ -8,14 +8,14 @@ import 'package:pet_nest/utils/apiEndpoint.dart';
 import 'package:http/http.dart' as http;
 
 class regController extends GetxController {
-  // Form submission status
+  // form submission status
   var isLoading = false.obs;
   var isOtpSent = false.obs;
 
   //controller instance for session management
   final sessionController _sessionController = Get.put(sessionController());
 
-  // TextEditingControllers
+  // text controllers
   TextEditingController userNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -24,7 +24,7 @@ class regController extends GetxController {
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
 
-  // Validate input
+  // validate input
   String? validateInput(String firstName, String lastName, String email, String username, String password) {
     print("firstname, $firstName");
     if (username.isEmpty) return "Username cannot be empty";
@@ -39,7 +39,7 @@ class regController extends GetxController {
     return null;
   }
 
-  // Register user
+  // register user
   Future<void> registerUser() async {
     isLoading.value = true;
     try {
@@ -94,7 +94,7 @@ class regController extends GetxController {
     }
   }
 
-  // Clear all fields after successful registration
+  // clear all fields after successful registration
   void clearFields() {
     userNameController.clear();
     firstNameController.clear();
@@ -105,12 +105,12 @@ class regController extends GetxController {
     otpController.clear();
   }
 
-  // Reset OTP state
+  // reset OTP state
   void resetOtpState() {
     isOtpSent.value = false; // Reset OTP state when needed
   }
 
-  // Send OTP (simulate for now)
+  // send OTP (simulate for now)
   void sendOtp() {
     if(phoneController == ""){
       Get.snackbar(
@@ -132,7 +132,7 @@ class regController extends GetxController {
     );
   }
 
-  // Validate OTP (dummy check for demonstration)
+  // validate OTP (dummy check for demonstration)
   void validateOtp(BuildContext context) {
 
     if (phoneController.text.trim().isEmpty || phoneController.text.trim().length <= 3){

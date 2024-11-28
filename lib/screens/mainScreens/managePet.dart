@@ -26,14 +26,14 @@ class managePet extends StatelessWidget {
             child: Column(
               children: [
 
-                //manage pic
+                // manage pic
                 SizedBox(height: 30,),
                 CircleAvatar(
                   radius: 80,
                   backgroundImage: AssetImage("lib/assets/manage.png") ,
                 ),
 
-                //Available Pet Count
+                // available Pet Count
                 const SizedBox(height: 30,),
                 Obx(() => profileFields(
                   title: "Available Pet Count",
@@ -41,7 +41,7 @@ class managePet extends StatelessWidget {
                   isObscured: false,
                 )),
 
-                //Adopted Pet Count
+                // adopted Pet Count
                 const SizedBox(height: 10,),
                 Obx(() => profileFields(
                   title: "Adopted Pet Count",
@@ -50,7 +50,7 @@ class managePet extends StatelessWidget {
                 )),
 
 
-                //manage buttons
+                // manage buttons
                 const SizedBox(height: 30,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class managePet extends StatelessWidget {
                       ),
                     ),
 
-                    //edit pet button
+                    // edit pet button
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: elevatedButtons(
@@ -88,8 +88,8 @@ class managePet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    //history button
-                    //delete pet button
+                    // history button
+                    // delete pet button
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: elevatedButtons(
@@ -102,7 +102,7 @@ class managePet extends StatelessWidget {
                       ),
                     ),
 
-                    //delete pet button
+                    // delete pet button
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: elevatedButtons(

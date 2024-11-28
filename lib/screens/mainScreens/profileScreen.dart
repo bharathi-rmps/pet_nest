@@ -33,48 +33,48 @@ class profileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      //profile pic
+                      // profile pic
                       CircleAvatar(
                         radius: 80,
                         backgroundImage: AssetImage("lib/assets/profile.png"),
                       ),
 
-                      //user name
+                      // user name
                       const SizedBox(height: 30,),
                       profileFields(
                           title: "User Name",
                           subTitle: _sessionController.username.value,
                           isObscured: false ),
 
-                      //full name
+                      // full name
                       const SizedBox(height: 10,),
                       profileFields(
                           title: "Full Name",
                           subTitle: _sessionController.firstname.value.toString() + " " + _sessionController.lastname.value.toString(),
                           isObscured: false ),
 
-                      //email
+                      // email
                       const SizedBox(height: 10,),
                       profileFields(
                           title: "Email ID",
                           subTitle: _sessionController.email.value,
                           isObscured: false ),
 
-                      //password
+                      // password
                       const SizedBox(height: 10,),
                       profileFields(
                           title: "Password",
                           subTitle: _sessionController.password.value,
                           isObscured: true ),
 
-                      //phone
+                      // phone
                       const SizedBox(height: 10,),
                       profileFields(
                           title: "Contact Number",
                           subTitle: _sessionController.phone.value,
                           isObscured: false ),
 
-                      //profile buttons
+                      // profile buttons
                       const SizedBox(height: 30,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +93,7 @@ class profileScreen extends StatelessWidget {
                             ),
                           ),
 
-                          //delete profile button
+                          // delete profile button
                           Padding(
                             padding: const EdgeInsets.all(2),
                             child:
@@ -114,7 +114,7 @@ class profileScreen extends StatelessWidget {
                             ),
                           ),
 
-                          //logout button
+                          // logout button
                           Padding(
                             padding: const EdgeInsets.all(2),
                             child:

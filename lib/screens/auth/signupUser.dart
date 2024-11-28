@@ -45,12 +45,14 @@ class signupUserScreen extends StatelessWidget {
                     ],
                   ),
 
+                  // sign in text
                   const SizedBox(height: 40),
                   Text(
                     "Hi, please register to continue!",
                     style: TextStyle(color: Colors.grey[700], fontSize: 16),
                   ),
 
+                  // username
                   const SizedBox(height: 30),
                   textField(
                     labelText: "User Name",
@@ -59,6 +61,7 @@ class signupUserScreen extends StatelessWidget {
                     obscureText: false,
                   ),
 
+                  // first name
                   const SizedBox(height: 30),
                   textField(
                     labelText: "First Name",
@@ -67,6 +70,7 @@ class signupUserScreen extends StatelessWidget {
                     obscureText: false,
                   ),
 
+                  // last name
                   const SizedBox(height: 30),
                   textField(
                     labelText: "Last Name",
@@ -75,6 +79,7 @@ class signupUserScreen extends StatelessWidget {
                     obscureText: false,
                   ),
 
+                  // mail id
                   const SizedBox(height: 30),
                   textField(
                     labelText: "E-Mail ID",
@@ -83,6 +88,7 @@ class signupUserScreen extends StatelessWidget {
                     obscureText: false,
                   ),
 
+                  // password
                   const SizedBox(height: 30),
                   textField(
                     labelText: "Password",
@@ -91,6 +97,7 @@ class signupUserScreen extends StatelessWidget {
                     obscureText: true,
                   ),
 
+                  // signup button
                   const SizedBox(height: 30),
                   signupButton(
                     onTap: () {
@@ -116,6 +123,7 @@ class signupUserScreen extends StatelessWidget {
                     },
                   ),
 
+                  // already have acc text
                   const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

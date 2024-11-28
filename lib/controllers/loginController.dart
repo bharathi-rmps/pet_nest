@@ -6,18 +6,18 @@ import 'package:pet_nest/screens/landingScreen.dart';
 import 'package:pet_nest/utils/apiEndpoint.dart';
 
 class loginController extends GetxController {
-  // TextEditingControllers
+  // text controller
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  //controller instance for session management
+  // controller instance for session management
   final sessionController _sessionController = Get.put(sessionController());
 
-  // Reactive properties
+  // reactive properties
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 
-  // Login function
+  // login function
   Future<void> loginUser() async {
     isLoading.value = true;
     errorMessage.value = '';
@@ -44,10 +44,10 @@ class loginController extends GetxController {
           colorText: Colors.white,
         );
 
-        // Clear input fields
+        // clear input fields
         clearFields();
 
-        // Navigate to the landing screen
+        // navigate to the landing screen
         Get.off(() => landingScreen(selectedIndex: 0,));
       } else {
         _sessionController.isLoggedIn.value = false;
@@ -74,7 +74,7 @@ class loginController extends GetxController {
     }
   }
 
-  // Clear all inputs
+  // clear all inputs
   void clearFields() {
     userNameController.clear();
     passwordController.clear();

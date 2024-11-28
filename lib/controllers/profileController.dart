@@ -8,7 +8,7 @@ import 'package:pet_nest/utils/apiEndpoint.dart';
 
 class profileController extends GetxController {
 
-  //controller instance for session management
+  // controller instance for session management
   final sessionController _sessionController = Get.put(sessionController());
 
   Future<void> updateUser() async {

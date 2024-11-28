@@ -62,7 +62,7 @@ class editProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              //user name
+              // user name
               const SizedBox(height: 25,),
               textField(
                   controller: usernameController,
@@ -71,7 +71,7 @@ class editProfileScreen extends StatelessWidget {
                   labelText: "User Name"
               ),
 
-              //first name
+              // first name
               const SizedBox(height: 30,),
               textField(
                   controller: firstNameController,
@@ -80,7 +80,7 @@ class editProfileScreen extends StatelessWidget {
                   labelText: "First Name"
               ),
 
-              //first name
+              // last name
               const SizedBox(height: 30,),
               textField(
                   controller: lastNameController,
@@ -89,7 +89,7 @@ class editProfileScreen extends StatelessWidget {
                   labelText: "Last Name"
               ),
 
-              //email id
+              // email id
               const SizedBox(height: 30,),
               textField(
                   controller: emailController,
@@ -98,7 +98,7 @@ class editProfileScreen extends StatelessWidget {
                   labelText: "Email Id"
               ),
 
-              //phone
+              // phone
               const SizedBox(height: 30,),
               textField(
                   controller: phoneController,
@@ -107,7 +107,7 @@ class editProfileScreen extends StatelessWidget {
                   labelText: "Contact Number"
               ),
 
-              //password
+              // password
               const SizedBox(height: 30,),
               textField(
                   controller: passwordController,
@@ -130,7 +130,7 @@ class editProfileScreen extends StatelessWidget {
                       color: Colors.deepOrangeAccent,
                       size: 18),
 
-                  //save changes button
+                  // save changes button
                   elevatedButtons(
                       onPressed: () {
                         promptBox.show(

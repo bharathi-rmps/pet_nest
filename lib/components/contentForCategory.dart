@@ -49,7 +49,7 @@ class contentForCategory extends StatelessWidget {
                return _buildLoadingView();
              }
 
-             //no pet found
+             // no pet found
              else if (_petDetailsController.availablePetList.isEmpty) {
                return _buildEmptyView();
              }
@@ -117,6 +117,7 @@ class contentForCategory extends StatelessWidget {
     return cardContent(
         pets: petsInCategory,
         showButton: true,
-        height: 0.7);
+        height: 0.7,
+        addOrAdoptUsername: "Added by : ",);
   }
 }

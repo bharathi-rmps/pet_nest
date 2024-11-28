@@ -17,12 +17,12 @@ class contentForAll extends StatelessWidget {
             return _buildLoadingView();
           }
 
-          //no pet found
+          // no pet found
           else if (_petDetailsController.availablePetList.isEmpty) {
             return _buildEmptyView();
           }
 
-          // Cards Grid
+          // cards Grid
           else {
             return _buildPetList();
           }
@@ -69,6 +69,7 @@ class contentForAll extends StatelessWidget {
       pets: _petDetailsController.availablePetList,
       showButton: true,
       height: 0.7,
+      addOrAdoptUsername: "Added By : ",
     );
   }
 }

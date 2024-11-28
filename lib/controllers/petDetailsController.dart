@@ -177,6 +177,19 @@ class petDetailsController extends GetxController {
 
   Future<void> editPet(int id, String categoryName, String name, String imageUrl, String username) async {
     try {
+      var petToAdopt = availablePetList.firstWhere(
+            (pet) => pet.id == id,
+      );
+      if (petToAdopt.addedBy != username) {
+        Get.snackbar(
+          "Error",
+          "You Cannot Edit Others Pet!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.theme.colorScheme.error,
+          colorText: Get.theme.primaryColorLight,
+        );
+        return;
+      }
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.editPet);
       var headers = {
         'Content-Type': 'application/json',
@@ -241,8 +254,21 @@ class petDetailsController extends GetxController {
     }
   }
 
-  Future<void> deletePet(int id) async {
+  Future<void> deletePet(int id, String username) async {
     try {
+      var petToAdopt = availablePetList.firstWhere(
+            (pet) => pet.id == id,
+      );
+      if (petToAdopt.addedBy != username) {
+        Get.snackbar(
+          "Error",
+          "You Cannot Delete Others Pet!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.theme.colorScheme.error,
+          colorText: Get.theme.primaryColorLight,
+        );
+        return;
+      }
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.deletePet + id.toString());
       var headers = {
         'Content-Type': 'application/json',
@@ -284,6 +310,20 @@ class petDetailsController extends GetxController {
 
   Future<void> adoptPet(int petId, String categoryName, String name, String imageUrl, String username) async {
     try {
+      var petToAdopt = availablePetList.firstWhere(
+              (pet) => pet.id == petId,
+      );
+      if (petToAdopt.addedBy == username) {
+        Get.snackbar(
+          "Error",
+          "You Cannot Adopt Your Own Pet!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Get.theme.colorScheme.error,
+          colorText: Get.theme.primaryColorLight,
+        );
+        return;
+      }
+
       var url = Uri.parse(apiEndpoint.baseUrl + apiEndpoint.petEndpoints.editPet);
       var headers = {
         'Content-Type': 'application/json',

@@ -12,11 +12,11 @@ import '../../controllers/sessionController.dart';
 class loginUserScreen extends StatelessWidget {
   loginUserScreen({super.key});
 
-  // Use GetX to retrieve the controller instance
+  // use GetX to retrieve the controller instance
   final loginController _loginController = Get.put(loginController());
   final sessionController _sessionController = Get.put(sessionController());
 
-  // Input validation
+  // input validation
   String? validateInput(String username, String password) {
     if (username.isEmpty) {
       return "Username cannot be empty";
@@ -32,7 +32,7 @@ class loginUserScreen extends StatelessWidget {
     return null;
   }
 
-  // Sign-in method
+  // sign-in method
   void userSignin() async {
     String username = _loginController.userNameController.text.trim();
     String password = _loginController.passwordController.text.trim();
@@ -85,7 +85,7 @@ class loginUserScreen extends StatelessWidget {
                     ],
                   ),
 
-                  // Login to continue text
+                  // login to continue text
                   const SizedBox(height: 50),
                   Text(
                     "Hi, please login continue!",
@@ -95,7 +95,7 @@ class loginUserScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Username textfield
+                  // username textfield
                   const SizedBox(height: 30),
                   textField(
                     labelText: "User Name",
@@ -104,7 +104,7 @@ class loginUserScreen extends StatelessWidget {
                     obscureText: false,
                   ),
 
-                  // Password textfield
+                  // password textfield
                   const SizedBox(height: 30),
                   textField(
                     labelText: "Password",
@@ -113,7 +113,7 @@ class loginUserScreen extends StatelessWidget {
                     obscureText: true,
                   ),
 
-                  // Forgot password button
+                  // forgot password button
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
@@ -133,13 +133,13 @@ class loginUserScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Login button
+                  // login button
                   const SizedBox(height: 15),
                   signinButton(
                     onTap: userSignin,
                   ),
 
-                  // Other signin options
+                  // other signin options
                   const SizedBox(height: 40),
                   Row(
                     children: [
@@ -167,7 +167,7 @@ class loginUserScreen extends StatelessWidget {
                     ],
                   ),
 
-                  // Social login images
+                  // social login images
                   const SizedBox(height: 30),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -177,7 +177,7 @@ class loginUserScreen extends StatelessWidget {
                     ],
                   ),
 
-                  // New user? Register here
+                  // new user? Register here
                   const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

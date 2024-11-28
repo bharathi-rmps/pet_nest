@@ -8,12 +8,14 @@ class cardContent extends StatelessWidget {
   final List<Pet> pets;
   final bool showButton;
   final height;
+  final String addOrAdoptUsername;
 
   cardContent({
     super.key,
     required this.pets,
     required this.showButton,
-    required this.height
+    required this.height,
+    required this.addOrAdoptUsername
   });
 
   final petDetailsController _petDetailsController = Get.put(petDetailsController());
@@ -82,6 +84,17 @@ class cardContent extends StatelessWidget {
                     //card text (pet category)
                     Text(
                       pet.category,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+
+                    //add or adopt text
+                    Text(
+                      addOrAdoptUsername + pet.addedBy,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

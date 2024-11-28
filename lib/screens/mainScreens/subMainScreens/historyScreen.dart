@@ -29,7 +29,7 @@ class petHistoryScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  //history banner pic
+                  // history banner pic
                   SizedBox(height: 1,),
                   Container(
                     height: 220,
@@ -71,7 +71,7 @@ class petHistoryScreen extends StatelessWidget {
                   else ... [
                     //pet details
                     const SizedBox(height: 30,),
-                    cardContent(pets: _petDetailsController.soldPetList, showButton: false, height: 0.95,),
+                    cardContent(pets: _petDetailsController.soldPetList, showButton: false, height: .85, addOrAdoptUsername: "Adopted By : ",),
                   ]
 
                 ],

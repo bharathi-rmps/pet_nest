@@ -42,7 +42,7 @@ class addPetScreen extends StatelessWidget{
            child: Column(
              children: [
 
-               // Banner Image
+               // banner image
                SizedBox(height: 1,),
                Container(
                  height: 200,
@@ -65,7 +65,7 @@ class addPetScreen extends StatelessWidget{
                  ),
                ),
 
-               //text
+               // text
                SizedBox(height: 20,),
                const Text(
                  "Please fill the below contents",
@@ -75,7 +75,7 @@ class addPetScreen extends StatelessWidget{
                  ),
                ),
 
-               //Pet Category Name
+               // pet category name
                const SizedBox(height: 25,),
                textField(
                    controller: petCategoryName,
@@ -84,7 +84,7 @@ class addPetScreen extends StatelessWidget{
                    labelText: "Pet Category"
                ),
 
-               //Pet Name
+               // pet name
                const SizedBox(height: 25,),
                textField(
                    controller: petName,
@@ -93,7 +93,7 @@ class addPetScreen extends StatelessWidget{
                    labelText: "Pet Name"
                ),
 
-               //Pet Image Url
+               // pet image url
                const SizedBox(height: 25,),
                textField(
                    controller: petImageUrl,
@@ -102,13 +102,13 @@ class addPetScreen extends StatelessWidget{
                    labelText: "Pet Image Url"
                ),
 
-               //buttons
+               // buttons
                const SizedBox(height: 50,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                  children: [
 
-                   //cancel button
+                   // cancel button
                    elevatedButtons(
                        onPressed: (){
                          Get.off(() => landingScreen(selectedIndex: 1,));
@@ -118,7 +118,7 @@ class addPetScreen extends StatelessWidget{
                        size: 18
                    ),
 
-                   //submit button
+                   // submit button
                    elevatedButtons(
                        onPressed: (){
                          String? errorMessage = validateInput(petCategoryName.text, petName.text, petImageUrl.text);

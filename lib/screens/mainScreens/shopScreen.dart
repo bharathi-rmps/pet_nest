@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_nest/components/cardContent.dart';
 import 'package:pet_nest/components/contentForAll.dart';
 import 'package:pet_nest/components/contentForCategory.dart';
 import 'package:pet_nest/components/contentForRecents.dart';
 import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/futureFeature.dart';
+import 'package:pet_nest/controllers/petDetailsController.dart';
 
 
 class shopScreen extends StatelessWidget {
 
   final selectedButton = 0.obs;
+  petDetailsController _petDetailsController = Get.put(petDetailsController());
+  final RxString searchQuery = ''.obs;
+  final RxBool showSearchContent = false.obs;
+  TextEditingController searchBarText = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +24,7 @@ class shopScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+
             // static Search Bar
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -25,11 +32,30 @@ class shopScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: SearchBar(
-                      onTap: () {
-                        futureFeature();
+                    child: Obx(() => TextField(
+                      controller: searchBarText,
+                      onChanged: (value) {
+                        searchQuery.value = value.trim().toLowerCase();
+                        showSearchContent.value = value.isNotEmpty;
                       },
-                    ),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white70,
+                        labelText: "Search by Category",
+                        border: OutlineInputBorder(),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: searchQuery.value.isNotEmpty
+                            ? IconButton(
+                          icon: const Icon(Icons.cancel),
+                          onPressed: () {
+                            searchQuery.value = "";
+                            searchBarText.clear();
+                            FocusScope.of(context).unfocus();
+                            showSearchContent.value = false;
+                          },
+                        ) : null,
+                      ),
+                    )),
                   ),
                 ],
               ),
@@ -43,6 +69,7 @@ class shopScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       // Banner Image
                       Container(
                         height: 200,
@@ -64,9 +91,9 @@ class shopScreen extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      const SizedBox(height: 15),
 
-                      // Pets List Buttons
+                      // pets list buttons
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -85,7 +112,7 @@ class shopScreen extends StatelessWidget {
                             ),
                           ),
 
-                          //category button
+                          // category button
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Obx(() => elevatedButtons(
@@ -99,7 +126,7 @@ class shopScreen extends StatelessWidget {
                            ),
                           ),
 
-                          //recents button
+                          // recents button
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Obx(() => elevatedButtons(
@@ -119,14 +146,27 @@ class shopScreen extends StatelessWidget {
                       // cards
                       const SizedBox(height: 15),
                       Obx(() {
-                        if (selectedButton.value == 0) {
-                          return contentForAll();
-                        } else if (selectedButton.value == 1) {
-                          return contentForCategory();
-                        } else if (selectedButton.value == 2) {
-                          return contentForRecents();
+
+                        // search result cards
+                        if (showSearchContent.value) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: _buildSearchResults(searchQuery.value),
+                          );
                         }
-                        return const Text("Unknown Selection");
+
+                        // all cards
+                        else {
+                          if (selectedButton.value == 0) {
+                            return contentForAll();
+                          } else if (selectedButton.value == 1) {
+                            return contentForCategory();
+                          } else if (selectedButton.value == 2) {
+                            return contentForRecents();
+                          }
+                          return const Text("Unknown Selection");
+                        }
+
                       }),
 
                     ],
@@ -140,9 +180,34 @@ class shopScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildSearchResults(String query) {
+
+    // filter pets based on category
+    final filteredPets = _petDetailsController.availablePetList
+        .where((pet) => pet.category.toLowerCase().contains(query))
+        .toList();
+
+    if (filteredPets.isEmpty) {
+      return const Center(
+        child: Text(
+          "No pets found for the entered category.",
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+
+    }
+
+    return cardContent(
+      pets: filteredPets,
+      showButton: true,
+      height: 0.7,
+      addOrAdoptUsername: "Added By : ",
+    );
+  }
+
 }
 
-// search Bar Component
+// search bar component
 class SearchBar extends StatelessWidget {
   final VoidCallback? onTap;
 
@@ -179,5 +244,6 @@ class SearchBar extends StatelessWidget {
       ),
     );
   }
+
 }
 

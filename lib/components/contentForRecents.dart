@@ -20,12 +20,12 @@ class contentForRecents extends StatelessWidget {
           return _buildLoadingView();
         }
 
-        //no pet found
+        // no pet found
         else if (_petDetailsController.availablePetList.isEmpty) {
           return _buildEmptyView();
         }
 
-        // Cards Grid
+        // cards Grid
         else {
           return _buildPetList(timeThreshold);
         }
@@ -74,17 +74,23 @@ class contentForRecents extends StatelessWidget {
 
     if (recentPets.isEmpty) {
       return const Center(
-        child: Text(
-          "No recent pets added in the last 5 minutes.",
-          style: TextStyle(fontSize: 16),
+        child: Column(
+          children: [
+            SizedBox(height: 80,),
+            Text(
+              "No Pets Added in Last 5 Minutes.",
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       );
-    } // Sort by time descending
+    }
 
     return cardContent(
       pets: recentPets,
       showButton: true,
       height: 0.7,
+      addOrAdoptUsername: "Added By : ",
     );
   }
 

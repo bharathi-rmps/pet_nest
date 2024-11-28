@@ -48,7 +48,8 @@ class editPetScreen extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             child: Column(
               children: [
-                // Banner Image
+
+                // banner image
                 SizedBox(height: 1,),
                 Container(
                   height: 220,
@@ -71,7 +72,7 @@ class editPetScreen extends StatelessWidget {
                   ),
                 ),
 
-                //text
+                // text
                 SizedBox(height: 20,),
                 const Text(
                   "Please Select the Pet and Edit",
@@ -81,7 +82,7 @@ class editPetScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Pet Dropdown
+                // pet dropdown
                 const SizedBox(height: 25),
                 Obx(() {
                   return DropdownButton<Pet>(
@@ -102,7 +103,7 @@ class editPetScreen extends StatelessWidget {
                   );
                 }),
 
-                // Pet Category Name
+                // pet category name
                 const SizedBox(height: 25),
                 textField(
                   controller: petCategoryName,
@@ -111,7 +112,7 @@ class editPetScreen extends StatelessWidget {
                   labelText: "Pet Category",
                 ),
 
-                // Pet Name
+                // pet name
                 const SizedBox(height: 25),
                 textField(
                   controller: petName,
@@ -120,7 +121,7 @@ class editPetScreen extends StatelessWidget {
                   labelText: "Pet Name",
                 ),
 
-                // Pet Image URL
+                // pet image url
                 const SizedBox(height: 25),
                 textField(
                   controller: petImageUrl,
@@ -129,12 +130,13 @@ class editPetScreen extends StatelessWidget {
                   labelText: "Pet Image URL",
                 ),
 
-                // Buttons
+                // buttons
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Cancel Button
+
+                    // cancel button
                     elevatedButtons(
                       onPressed: () {
                         Get.off(() => landingScreen(selectedIndex: 1,));
@@ -144,7 +146,7 @@ class editPetScreen extends StatelessWidget {
                       size: 18,
                     ),
 
-                    // Submit Button
+                    // submit button
                     elevatedButtons(
                       onPressed: () {
                         String? errorMessage =

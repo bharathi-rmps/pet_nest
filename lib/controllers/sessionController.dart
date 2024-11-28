@@ -6,7 +6,7 @@ import 'package:pet_nest/utils/apiEndpoint.dart';
 import 'package:http/http.dart' as http;
 
 class sessionController extends GetxController {
-  // Reactive session state
+  // reactive session state
   var isLoggedIn = false.obs;
   var id = 0.obs;
   var username = ''.obs;
@@ -17,7 +17,7 @@ class sessionController extends GetxController {
   var phone = ''.obs;
   var userStatus = 0.obs;
 
-  // Storage instance for persisting session
+  // storage instance for persisting session
   final GetStorage _storage = GetStorage();
 
   @override

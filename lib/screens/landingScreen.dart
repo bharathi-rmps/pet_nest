@@ -25,7 +25,8 @@ class landingScreen extends StatelessWidget  {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Obx(() {
-        // Update body content based on selected index
+
+        // update body content based on selected index
         switch (_navigationController.selectedIndex.value) {
           case 0:
             return shopScreen();
@@ -39,8 +40,9 @@ class landingScreen extends StatelessWidget  {
             );
         }
       }),
+
       bottomNavigationBar: Obx(() {
-        // Update BottomNavigationBar dynamically
+        // update bottom navigation bar dynamically
         return BottomNavigationBar(
           currentIndex: _navigationController.selectedIndex.value,
           onTap: (index) {

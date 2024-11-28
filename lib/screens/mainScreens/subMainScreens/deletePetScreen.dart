@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pet_nest/components/elevatedButtons.dart';
 import 'package:pet_nest/components/promptBox.dart';
 import 'package:pet_nest/controllers/petDetailsController.dart';
+import 'package:pet_nest/controllers/sessionController.dart';
 import 'package:pet_nest/screens/landingScreen.dart';
 
 import '../../../components/profileFields.dart';
@@ -22,6 +23,8 @@ class deletePetScreen extends StatelessWidget {
     if (petImageUrl.isEmpty) return "Pet Image URL cannot be empty";
     return null;
   }
+
+  sessionController _sessionController = Get.find<sessionController>();
 
   void updateTextFields(Pet pet) {
     petCategoryName.text = pet.category;
@@ -46,7 +49,7 @@ class deletePetScreen extends StatelessWidget {
             child: Column(
               children: [
 
-                // Banner Image
+                // banner image
                 SizedBox(height: 1,),
                 Container(
                   height: 200,
@@ -69,7 +72,7 @@ class deletePetScreen extends StatelessWidget {
                   ),
                 ),
 
-                //text
+                // text
                 SizedBox(height: 20,),
                 const Text(
                   "Please Select the Pet and Delete",
@@ -79,7 +82,7 @@ class deletePetScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Pet Dropdown
+                // pet dropdown
                 const SizedBox(height: 25),
                 Obx(() {
                   return DropdownButton<Pet>(
@@ -135,12 +138,13 @@ class deletePetScreen extends StatelessWidget {
                 ),
 
 
-                // Buttons
+                // buttons
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Cancel Button
+
+                    // cancel Button
                     elevatedButtons(
                       onPressed: () {
                         Get.off(() => landingScreen(selectedIndex: 1,));
@@ -150,7 +154,7 @@ class deletePetScreen extends StatelessWidget {
                       size: 18,
                     ),
 
-                    // Submit Button
+                    // submit button
                     elevatedButtons(
                       onPressed: () {
                         String? errorMessage =
@@ -170,7 +174,8 @@ class deletePetScreen extends StatelessWidget {
                             content: "Are you sure you want to delete this pet?",
                             onConfirm: () async {
                               await _petDetailsController.deletePet(
-                                  selectedPet.value!.id
+                                  selectedPet.value!.id,
+                                  _sessionController.username.value
                               );
                               Get.off(() => landingScreen(selectedIndex: 1,));
                             },
